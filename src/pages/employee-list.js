@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
-import {mockEmployees} from '../data/mock-employees.js';
 import {employeeStore} from '../store/employee-store.js';
+import {t} from '../utils/i18n.js';
 
 export class EmployeeList extends LitElement {
   static styles = css`
@@ -51,8 +51,7 @@ export class EmployeeList extends LitElement {
     this.itemsPerPage = 10;
     this.employees = [];
 
-    employeeStore.initIfEmpty(mockEmployees);
-
+    employeeStore.initIfEmpty();
     this.employees = employeeStore.getAll();
 
     this._onEmployeesUpdate = this._onEmployeesUpdate.bind(this);
@@ -87,10 +86,18 @@ export class EmployeeList extends LitElement {
   render() {
     return html`
       <div class="controls">
-        <input type="text" placeholder="Search..." @input=${this._onSearch} />
+        <input
+          type="text"
+          placeholder=${t('search') || 'Search...'}
+          @input=${this._onSearch}
+        />
         <div class="view-toggle">
-          <button @click=${() => (this.viewMode = 'table')}>Table</button>
-          <button @click=${() => (this.viewMode = 'list')}>List</button>
+          <button @click=${() => (this.viewMode = 'table')}>
+            ${t('table') || 'Table'}
+          </button>
+          <button @click=${() => (this.viewMode = 'list')}>
+            ${t('list') || 'List'}
+          </button>
         </div>
       </div>
 
@@ -104,11 +111,11 @@ export class EmployeeList extends LitElement {
       <table>
         <thead>
           <tr>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Department</th>
-            <th>Position</th>
-            <th>Actions</th>
+            <th>${t('fullName') || 'Full Name'}</th>
+            <th>${t('email') || 'Email'}</th>
+            <th>${t('department') || 'Department'}</th>
+            <th>${t('position') || 'Position'}</th>
+            <th>${t('actions') || 'Actions'}</th>
           </tr>
         </thead>
         <tbody>
@@ -120,8 +127,12 @@ export class EmployeeList extends LitElement {
                 <td>${emp.department}</td>
                 <td>${emp.position}</td>
                 <td>
-                  <button @click=${() => this._edit(emp.id)}>Edit</button>
-                  <button @click=${() => this._delete(emp.id)}>Delete</button>
+                  <button @click=${() => this._edit(emp.id)}>
+                    ${t('edit') || 'Edit'}
+                  </button>
+                  <button @click=${() => this._delete(emp.id)}>
+                    ${t('delete') || 'Delete'}
+                  </button>
                 </td>
               </tr>
             `
@@ -139,8 +150,12 @@ export class EmployeeList extends LitElement {
             <strong>${emp.firstName} ${emp.lastName}</strong><br />
             ${emp.email}<br />
             ${emp.department} - ${emp.position}<br />
-            <button @click=${() => this._edit(emp.id)}>Edit</button>
-            <button @click=${() => this._delete(emp.id)}>Delete</button>
+            <button @click=${() => this._edit(emp.id)}>
+              ${t('edit') || 'Edit'}
+            </button>
+            <button @click=${() => this._delete(emp.id)}>
+              ${t('delete') || 'Delete'}
+            </button>
           </div>
         `
       )}
@@ -175,7 +190,7 @@ export class EmployeeList extends LitElement {
   }
 
   _delete(id) {
-    const confirmed = confirm('Are you sure you want to delete this employee?');
+    const confirmed = confirm(t('confirmDelete'));
     if (!confirmed) return;
     employeeStore.delete(id);
   }

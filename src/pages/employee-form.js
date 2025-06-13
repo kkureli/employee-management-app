@@ -1,5 +1,6 @@
 import {LitElement, html} from 'lit';
 import {employeeStore} from '../store/employee-store.js';
+import {t} from '../utils/i18n.js';
 
 export class EmployeeForm extends LitElement {
   static properties = {
@@ -48,23 +49,23 @@ export class EmployeeForm extends LitElement {
 
   render() {
     return html`
-      <h2>${this.mode === 'edit' ? 'Edit Employee' : 'Add New Employee'}</h2>
+      <h2>${this.mode === 'edit' ? t('editEmployee') : t('addEmployee')}</h2>
       <form @submit=${this._handleSubmit}>
-        ${this._renderInput('firstName', 'First Name')}
-        ${this._renderInput('lastName', 'Last Name')}
-        ${this._renderInput('dob', 'Date of Birth', 'date')}
-        ${this._renderInput('employmentDate', 'Date of Employment', 'date')}
-        ${this._renderInput('phone', 'Phone Number')}
-        ${this._renderInput('email', 'Email', 'email')}
+        ${this._renderInput('firstName', t('firstName'))}
+        ${this._renderInput('lastName', t('lastName'))}
+        ${this._renderInput('dob', t('dob'), 'date')}
+        ${this._renderInput('employmentDate', t('employmentDate'), 'date')}
+        ${this._renderInput('phone', t('phone'))}
+        ${this._renderInput('email', t('email'), 'email')}
 
         <label>
-          Department:
+          ${t('department')}:
           <select
             name="department"
             .value=${this.formData.department}
             @change=${this._onInput}
           >
-            <option value="">Select</option>
+            <option value="">${t('select')}</option>
             <option value="Analytics">Analytics</option>
             <option value="Tech">Tech</option>
           </select>
@@ -74,13 +75,13 @@ export class EmployeeForm extends LitElement {
         </label>
 
         <label>
-          Position:
+          ${t('position')}:
           <select
             name="position"
             .value=${this.formData.position}
             @change=${this._onInput}
           >
-            <option value="">Select</option>
+            <option value="">${t('select')}</option>
             <option value="Junior">Junior</option>
             <option value="Medior">Medior</option>
             <option value="Senior">Senior</option>
@@ -90,7 +91,7 @@ export class EmployeeForm extends LitElement {
             : ''}
         </label>
 
-        <button type="submit">Submit</button>
+        <button type="submit">${t('submit')}</button>
       </form>
     `;
   }
@@ -121,9 +122,7 @@ export class EmployeeForm extends LitElement {
     if (!this._validate()) return;
 
     if (this.mode === 'edit') {
-      const confirmUpdate = confirm(
-        'Are you sure you want to update this employee?'
-      );
+      const confirmUpdate = confirm(t('confirmUpdate'));
       if (!confirmUpdate) return;
       employeeStore.update(this.employeeId, this.formData);
     } else {
@@ -148,7 +147,7 @@ export class EmployeeForm extends LitElement {
       'position',
     ];
     requiredFields.forEach((field) => {
-      if (!this.formData[field]) errors[field] = 'Required';
+      if (!this.formData[field]) errors[field] = t('required');
     });
 
     this.errors = errors;
