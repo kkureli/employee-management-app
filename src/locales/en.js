@@ -34,4 +34,7 @@ export default {
   confirmDeleteMultipleMessage: 'Selected Employee records will be deleted.',
   confirmDeleteMultipleTitle: 'Bulk Delete Confirmation',
   importFromMock: 'Import from Mock Data',
+  emailAlreadyExists:
+    'This email already exists. Please use a different email.',
+  invalidEmail: 'Invalid email format. Please enter a valid email address.',
 };
