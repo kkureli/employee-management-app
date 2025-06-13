@@ -10,7 +10,9 @@ export class AppRoot extends LitElement {
       padding: 1rem;
     }
   `;
-
+  createRenderRoot() {
+    return this;
+  }
   updated() {
     initRouter();
   }
