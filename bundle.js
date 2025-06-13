@@ -1205,7 +1205,7 @@ try {
     #outlet {
       padding: 1rem;
     }
-  `;createRenderRoot(){return this}updated(){new be(document.getElementById("outlet")).setRoutes([{path:"/",component:"employee-list"},{path:"/add",component:"employee-form"},{path:"/edit/:id",component:"employee-form"}])}render(){return F`
+  `;createRenderRoot(){return this}updated(){(()=>{const t=document.getElementById("outlet"),e="localhost"===location.hostname?"/":"/employee-management-app/";new be(t,{baseUrl:e}).setRoutes([{path:"/",component:"employee-list"},{path:"/add",component:"employee-form"},{path:"/edit/:id",component:"employee-form"}])})()}render(){return F`
       <navigation-menu></navigation-menu>
       <div id="outlet"></div>
     `}}customElements.define("app-root",ge);export{ge as AppRoot};
