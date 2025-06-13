@@ -22,4 +22,16 @@ export default {
       },
     }),
   ],
+  middleware: [
+    function rewriteToIndex(context, next) {
+      if (
+        context.url !== '/' &&
+        !context.url.startsWith('/src') &&
+        !context.url.includes('.') // asset dosyası değilse
+      ) {
+        context.url = '/';
+      }
+      return next();
+    },
+  ],
 };
