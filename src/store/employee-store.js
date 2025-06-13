@@ -43,4 +43,8 @@ export const employeeStore = {
       this._persist();
     }
   },
+  clear() {
+    employees = [];
+    this._persist();
+  },
 };

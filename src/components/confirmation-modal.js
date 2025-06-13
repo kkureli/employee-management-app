@@ -96,6 +96,13 @@ export class ConfirmationModal extends LitElement {
     message: {type: String},
   };
 
+  constructor() {
+    super();
+    this.open = false;
+    this.title = '';
+    this.message = '';
+  }
+
   render() {
     if (!this.open) return html``;
     return html`
