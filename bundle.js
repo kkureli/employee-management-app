@@ -92,12 +92,7 @@ const x=globalThis,E=x.trustedTypes,k=E?E.createPolicy("lit-html",{createHTML:t=
   `;constructor(){super(),this.language=localStorage.getItem("lang")||document.documentElement.lang||"en"}render(){return F`
       <nav>
         <div class="logo">
-          <img
-            width="32"
-            height="32"
-            src="../../assets/ing.png"
-            alt="ING Logo"
-          />
+          <img width="32" height="32" src="assets/ing.png" alt="ING Logo" />
           <span>ING</span>
         </div>
         <div class="nav-links">
@@ -108,7 +103,7 @@ const x=globalThis,E=x.trustedTypes,k=E?E.createPolicy("lit-html",{createHTML:t=
           <img
             width="24"
             height="16"
-            src=${"tr"===this.language?"../../assets/tr.png":"../../assets/uk.png"}
+            src=${"tr"===this.language?"assets/tr.png":"assets/uk.png"}
             alt=${"tr"===this.language?"Turkish Flag":"English Flag"}
             class="lang-flag"
             @click=${this._toggleLanguage}
