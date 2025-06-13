@@ -35,4 +35,8 @@ export default {
   confirmDeleteMultipleTitle: 'Çoklu Silme Onayı',
   confirmDeleteMultipleProceed: 'Seçilenleri Sil',
   importFromMock: 'Örnek Verilerden İçe Aktar',
+  emailAlreadyExists:
+    'Bu e-posta zaten mevcut. Lütfen farklı bir e-posta kullanın.',
+  invalidEmail:
+    'Geçersiz e-posta formatı. Lütfen geçerli bir e-posta adresi girin.',
 };

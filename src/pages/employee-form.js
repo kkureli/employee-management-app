@@ -173,6 +173,19 @@ export class EmployeeForm extends LitElement {
     window.dispatchEvent(new Event('popstate'));
   }
 
+  _isEmailUnique(email, currentId = null) {
+    const employees = employeeStore.getAll();
+    return !employees.some(
+      (emp) =>
+        emp.email.toLowerCase() === email.toLowerCase() && emp.id !== currentId
+    );
+  }
+
+  _isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
   _validate() {
     const errors = {};
     const requiredFields = [
@@ -188,6 +201,14 @@ export class EmployeeForm extends LitElement {
     requiredFields.forEach((field) => {
       if (!this.formData[field]) errors[field] = t('required');
     });
+
+    if (this.formData.email) {
+      if (!this._isValidEmail(this.formData.email)) {
+        errors.email = t('invalidEmail');
+      } else if (!this._isEmailUnique(this.formData.email, this.employeeId)) {
+        errors.email = t('emailExists');
+      }
+    }
 
     this.errors = errors;
     return Object.keys(errors).length === 0;
