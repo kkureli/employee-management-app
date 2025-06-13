@@ -39,6 +39,7 @@ export class EmployeeList extends LitElement {
     viewMode: {type: String},
     searchQuery: {type: String},
     currentPage: {type: Number},
+    employees: {type: Array},
   };
 
   constructor() {
@@ -47,10 +48,11 @@ export class EmployeeList extends LitElement {
     this.searchQuery = '';
     this.currentPage = 1;
     this.itemsPerPage = 10;
+    this.employees = [...mockEmployees];
   }
 
   get filteredEmployees() {
-    return mockEmployees.filter((emp) => {
+    return this.employees.filter((emp) => {
       const fullName = `${emp.firstName} ${emp.lastName}`.toLowerCase();
       return fullName.includes(this.searchQuery.toLowerCase());
     });
@@ -59,6 +61,10 @@ export class EmployeeList extends LitElement {
   get paginatedEmployees() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     return this.filteredEmployees.slice(start, start + this.itemsPerPage);
+  }
+
+  get totalPages() {
+    return Math.ceil(this.filteredEmployees.length / this.itemsPerPage);
   }
 
   render() {
@@ -155,8 +161,13 @@ export class EmployeeList extends LitElement {
   }
 
   _delete(id) {
-    alert(`Would delete employee with ID: ${id}`);
-    // Sonradan store’a bağlayacağız
+    const confirmed = confirm('Are you sure you want to delete this employee?');
+    if (!confirmed) return;
+
+    this.employees = this.employees.filter((emp) => emp.id !== id);
+    if (this.currentPage > this.totalPages) {
+      this.currentPage = this.totalPages;
+    }
   }
 }
 
