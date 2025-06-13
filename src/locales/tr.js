@@ -12,7 +12,7 @@ export default {
   select: 'Seçiniz',
   submit: 'Gönder',
   required: 'Zorunlu',
-  confirmUpdate: 'Çalışmayı güncellemek istediğinize emin misiniz?',
+  confirmUpdate: 'Çalışanı güncellemek istediğinize emin misiniz?',
   confirmDelete: 'Çalışanı silmek istediğinize emin misiniz?',
   fullName: 'Ad Soyad',
   actions: 'İşlemler',
