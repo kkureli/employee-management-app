@@ -96,8 +96,8 @@ const x=globalThis,E=x.trustedTypes,k=E?E.createPolicy("lit-html",{createHTML:t=
           <span>ING</span>
         </div>
         <div class="nav-links">
-          <a href="/" title=${dt("employeeList")}> ${dt("employeeList")} </a>
-          <a href="/add" class="add-new" title=${dt("addEmployee")}>
+          <a href="./" title=${dt("employeeList")}>${dt("employeeList")}</a>
+          <a href="add" class="add-new" title=${dt("addEmployee")}>
             ${dt("addEmployee")} +
           </a>
           <img
