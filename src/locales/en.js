@@ -22,4 +22,16 @@ export default {
   table: 'Table View',
   list: 'List View',
   search: 'Search...',
+  confirmDeleteMultiple:
+    'Are you sure you want to delete the selected employees?',
+  selected: 'Selected',
+  deleteSelected: 'Delete Selected',
+  confirmDeleteTitle: 'Delete Confirmation',
+  proceed: 'Proceed',
+  cancel: 'Cancel',
+  confirmDeleteMessage:
+    'Selected Employee record of {firstName} {lastName} will be deleted.',
+  confirmDeleteMultipleMessage: 'Selected Employee records will be deleted.',
+  confirmDeleteMultipleTitle: 'Bulk Delete Confirmation',
+  importFromMock: 'Import from Mock Data',
 };

@@ -1,6 +1,6 @@
 export default {
   addEmployee: 'Yeni Çalışan Ekle',
-  editEmployee: 'Çalışmayı Düzenle',
+  editEmployee: 'Çalışanı Düzenle',
   firstName: 'Ad',
   lastName: 'Soyad',
   dob: 'Doğum Tarihi',
@@ -22,4 +22,17 @@ export default {
   table: 'Tablo Görünümü',
   list: 'Liste Görünümü',
   search: 'Arama...',
+  confirmDeleteMultiple:
+    'Seçilen çalışanları silmek istediğinize emin misiniz?',
+  selected: 'Seçilen',
+  deleteSelected: 'Seçilenleri Sil',
+  confirmDeleteTitle: 'Silme Onayı',
+  proceed: 'Devam Et',
+  cancel: 'İptal',
+  confirmDeleteMessage:
+    '{firstName} {lastName} adlı çalışanın kaydı silinecektir.',
+  confirmDeleteMultipleMessage: 'Seçilen çalışanların kayıtları silinecektir.',
+  confirmDeleteMultipleTitle: 'Çoklu Silme Onayı',
+  confirmDeleteMultipleProceed: 'Seçilenleri Sil',
+  importFromMock: 'Örnek Verilerden İçe Aktar',
 };
