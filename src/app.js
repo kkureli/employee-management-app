@@ -1,16 +1,25 @@
 import {LitElement, html, css} from 'lit';
+import './components/navigation-menu.js';
+import './pages/employee-list.js';
+import './pages/employee-form.js';
+import {initRouter} from './router/router.js';
 
 export class AppRoot extends LitElement {
   static styles = css`
-    :host {
-      display: block;
-      font-family: sans-serif;
+    #outlet {
       padding: 1rem;
     }
   `;
 
+  updated() {
+    initRouter();
+  }
+
   render() {
-    return html`<h1>Employee Management App</h1>`;
+    return html`
+      <navigation-menu></navigation-menu>
+      <div id="outlet"></div>
+    `;
   }
 }
 
