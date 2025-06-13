@@ -1,10 +1,10 @@
 import {LitElement, html} from 'lit';
-import {mockEmployees} from '../data/mock-employees.js';
+import {employeeStore} from '../store/employee-store.js';
 
 export class EmployeeForm extends LitElement {
   static properties = {
     employeeId: {type: Number},
-    mode: {type: String}, // 'add' veya 'edit'
+    mode: {type: String},
     formData: {type: Object},
     errors: {type: Object},
   };
@@ -32,8 +32,17 @@ export class EmployeeForm extends LitElement {
     if (match) {
       this.mode = 'edit';
       this.employeeId = Number(match[1]);
-      const emp = mockEmployees.find((e) => e.id === this.employeeId);
+      const emp = employeeStore.getAll().find((e) => e.id === this.employeeId);
       if (emp) this.formData = {...emp};
+    }
+  }
+
+  updated(changedProps) {
+    if (changedProps.has('employeeId')) {
+      const emp = employeeStore.getAll().find((e) => e.id === this.employeeId);
+      if (emp) {
+        this.formData = {...emp};
+      }
     }
   }
 
@@ -116,10 +125,10 @@ export class EmployeeForm extends LitElement {
         'Are you sure you want to update this employee?'
       );
       if (!confirmUpdate) return;
-      console.log('Güncellenecek veri:', this.formData);
+      employeeStore.update(this.employeeId, this.formData);
     } else {
-      const newId = Math.floor(Math.random() * 10000);
-      console.log('Eklenecek yeni veri:', {id: newId, ...this.formData});
+      const newId = Date.now();
+      employeeStore.add({id: newId, ...this.formData});
     }
 
     window.history.pushState({}, '', '/');
@@ -128,26 +137,19 @@ export class EmployeeForm extends LitElement {
 
   _validate() {
     const errors = {};
-    if (!this.formData.firstName) errors.firstName = 'Required';
-    if (!this.formData.lastName) errors.lastName = 'Required';
-    if (!this.formData.email) errors.email = 'Required';
-    if (!this.formData.phone) errors.phone = 'Required';
-    if (!this.formData.department) errors.department = 'Required';
-    if (!this.formData.position) errors.position = 'Required';
-    if (!this.formData.department || this.formData.department === '') {
-      errors.department = 'Department is required';
-    }
-
-    if (!this.formData.position || this.formData.position === '') {
-      errors.position = 'Position is required';
-    }
-    if (!this.formData.dob) {
-      errors.dob = 'This field is required';
-    }
-
-    if (!this.formData.employmentDate) {
-      errors.employmentDate = 'This field is required';
-    }
+    const requiredFields = [
+      'firstName',
+      'lastName',
+      'dob',
+      'employmentDate',
+      'phone',
+      'email',
+      'department',
+      'position',
+    ];
+    requiredFields.forEach((field) => {
+      if (!this.formData[field]) errors[field] = 'Required';
+    });
 
     this.errors = errors;
     return Object.keys(errors).length === 0;

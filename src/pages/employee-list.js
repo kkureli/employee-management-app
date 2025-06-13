@@ -1,5 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {mockEmployees} from '../data/mock-employees.js';
+import {employeeStore} from '../store/employee-store.js';
 
 export class EmployeeList extends LitElement {
   static styles = css`
@@ -44,11 +45,27 @@ export class EmployeeList extends LitElement {
 
   constructor() {
     super();
-    this.viewMode = 'table'; // or 'list'
+    this.viewMode = 'table';
     this.searchQuery = '';
     this.currentPage = 1;
     this.itemsPerPage = 10;
-    this.employees = [...mockEmployees];
+    this.employees = [];
+
+    employeeStore.initIfEmpty(mockEmployees);
+
+    this.employees = employeeStore.getAll();
+
+    this._onEmployeesUpdate = this._onEmployeesUpdate.bind(this);
+    window.addEventListener('employees-updated', this._onEmployeesUpdate);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('employees-updated', this._onEmployeesUpdate);
+  }
+
+  _onEmployeesUpdate(e) {
+    this.employees = e.detail;
   }
 
   get filteredEmployees() {
@@ -131,12 +148,9 @@ export class EmployeeList extends LitElement {
   }
 
   _renderPagination() {
-    const totalPages = Math.ceil(
-      this.filteredEmployees.length / this.itemsPerPage
-    );
     return html`
       <div class="pagination">
-        ${Array.from({length: totalPages}).map(
+        ${Array.from({length: this.totalPages}).map(
           (_, i) => html`
             <button
               ?disabled=${this.currentPage === i + 1}
@@ -163,11 +177,7 @@ export class EmployeeList extends LitElement {
   _delete(id) {
     const confirmed = confirm('Are you sure you want to delete this employee?');
     if (!confirmed) return;
-
-    this.employees = this.employees.filter((emp) => emp.id !== id);
-    if (this.currentPage > this.totalPages) {
-      this.currentPage = this.totalPages;
-    }
+    employeeStore.delete(id);
   }
 }
 
