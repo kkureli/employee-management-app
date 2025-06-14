@@ -104,3 +104,31 @@ npm run test -- --coverage
 - `web-test-runner.config.js`: Test runner setup for running tests in browsers with code coverage.
 - `README.md`: This documentation file.
 
+- ## Commit Message Types
+
+```
+[TYPE]: [COMMIT MESSAGE]
+```
+
+For example:
+
+```
+style: style file updated.
+```
+
+| type     | release |
+| -------- | ------- |
+| breaking | major   |
+| feat     | minor   |
+| fix      | patch   |
+| build    | patch   |
+| style    | patch   |
+| refactor | patch   |
+| perf     | patch   |
+| chore    | none    |
+| ci       | none    |
+| docs     | none    |
+| test     | none    |
+
+
+
