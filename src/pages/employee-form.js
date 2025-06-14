@@ -206,7 +206,7 @@ export class EmployeeForm extends LitElement {
       if (!this._isValidEmail(this.formData.email)) {
         errors.email = t('invalidEmail');
       } else if (!this._isEmailUnique(this.formData.email, this.employeeId)) {
-        errors.email = t('emailExists');
+        errors.email = t('emailAlreadyExists');
       }
     }
 
