@@ -1,5 +1,9 @@
 # Employee Management Application
 
+<img width="500"  alt="Screenshot 2025-06-15 at 00 59 12" src="https://github.com/user-attachments/assets/b8545de5-787b-4cf0-840e-b06fbfd225d7" />
+<img width="500"  alt="Screenshot 2025-06-15 at 00 59 19" src="https://github.com/user-attachments/assets/2e7427da-7432-490e-bfd9-fcc43023c9f3" />
+
+
 ## About the Project
 
 This is a web application built using LitElement (JavaScript version) designed to help HR staff manage company employee records. It allows listing, adding, editing, and deleting employee information easily.
