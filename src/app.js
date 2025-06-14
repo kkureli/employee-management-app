@@ -13,8 +13,10 @@ export class AppRoot extends LitElement {
   createRenderRoot() {
     return this;
   }
-  updated() {
-    initRouter();
+
+  firstUpdated() {
+    const outlet = this.querySelector('#outlet');
+    initRouter(outlet);
   }
 
   render() {
