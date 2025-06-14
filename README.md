@@ -74,7 +74,7 @@ This is a web application built using LitElement (JavaScript version) designed t
 ### Installation
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/kkureli/employee-management-app.git
 cd employee-management-app
 npm install
 ```
