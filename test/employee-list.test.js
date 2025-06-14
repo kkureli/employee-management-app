@@ -123,7 +123,10 @@ describe('employee-list', () => {
     element.employees = employeeStore.getAll();
     await element.updateComplete;
 
-    const selectAllCheckbox = element.shadowRoot.querySelector(
+    const table = element.shadowRoot.querySelector('employee-list-table');
+    await table.updateComplete;
+
+    const selectAllCheckbox = table.shadowRoot.querySelector(
       'thead input[type="checkbox"]'
     );
     selectAllCheckbox.checked = true;
@@ -162,7 +165,10 @@ describe('employee-list', () => {
     element.selectedEmployeeIds = [5, 6];
     await element.updateComplete;
 
-    const selectAllCheckbox = element.shadowRoot.querySelector(
+    const table = element.shadowRoot.querySelector('employee-list-table');
+    await table.updateComplete;
+
+    const selectAllCheckbox = table.shadowRoot.querySelector(
       'thead input[type="checkbox"]'
     );
     selectAllCheckbox.checked = false;
@@ -189,7 +195,10 @@ describe('employee-list', () => {
 
     expect(element.selectedEmployeeIds.includes(7)).to.be.false;
 
-    const checkbox = element.shadowRoot.querySelector(
+    const table = element.shadowRoot.querySelector('employee-list-table');
+    await table.updateComplete;
+
+    const checkbox = table.shadowRoot.querySelector(
       'tbody input[type="checkbox"]'
     );
     checkbox.checked = true;
@@ -298,7 +307,10 @@ describe('employee-list', () => {
       pushStateCalled = true;
     };
 
-    const editBtn = element.shadowRoot.querySelector(
+    const table = element.shadowRoot.querySelector('employee-list-table');
+    await table.updateComplete;
+
+    const editBtn = table.shadowRoot.querySelector(
       'tbody button[title="Edit"]'
     );
     editBtn.click();

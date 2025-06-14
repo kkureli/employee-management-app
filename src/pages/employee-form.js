@@ -1,50 +1,15 @@
-import {LitElement, css, html} from 'lit';
+import {LitElement, html} from 'lit';
 import {employeeStore} from '../store/employee-store.js';
 import {t} from '../utils/i18n.js';
+import employeeFormStyles from './styles/employee-form.css.js'; // css import
+import {validateEmployee} from '../utils/employee-validation.js';
 
 export class EmployeeForm extends LitElement {
-  static styles = css`
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    label {
-      display: block;
-      font-weight: 600;
-      color: #f36d00;
-    }
-    input,
-    select {
-      display: block;
-      margin-top: 0.25rem;
-      padding: 0.5rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    button[type='submit'] {
-      padding: 0.75rem 1.5rem;
-      font-weight: 700;
-      background-color: #f36d00;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button[type='submit']:hover {
-      background-color: #d85c00;
-    }
-    h2 {
-      color: #f36d00;
-    }
-  `;
+  static styles = employeeFormStyles;
 
   static properties = {
     employeeId: {type: Number},
-    mode: {type: String},
+    mode: {type: String}, // 'add' or 'edit'
     formData: {type: Object},
     errors: {type: Object},
   };
@@ -158,7 +123,16 @@ export class EmployeeForm extends LitElement {
 
   _handleSubmit(e) {
     e.preventDefault();
-    if (!this._validate()) return;
+
+    const employees = employeeStore.getAll();
+    this.errors = validateEmployee(
+      this.formData,
+      employees,
+      this.employeeId,
+      t
+    );
+
+    if (Object.keys(this.errors).length > 0) return;
 
     if (this.mode === 'edit') {
       const confirmUpdate = confirm(t('confirmUpdate'));
@@ -171,47 +145,6 @@ export class EmployeeForm extends LitElement {
 
     window.history.pushState({}, '', '/');
     window.dispatchEvent(new Event('popstate'));
-  }
-
-  _isEmailUnique(email, currentId = null) {
-    const employees = employeeStore.getAll();
-    return !employees.some(
-      (emp) =>
-        emp.email.toLowerCase() === email.toLowerCase() && emp.id !== currentId
-    );
-  }
-
-  _isValidEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  }
-
-  _validate() {
-    const errors = {};
-    const requiredFields = [
-      'firstName',
-      'lastName',
-      'dob',
-      'employmentDate',
-      'phone',
-      'email',
-      'department',
-      'position',
-    ];
-    requiredFields.forEach((field) => {
-      if (!this.formData[field]) errors[field] = t('required');
-    });
-
-    if (this.formData.email) {
-      if (!this._isValidEmail(this.formData.email)) {
-        errors.email = t('invalidEmail');
-      } else if (!this._isEmailUnique(this.formData.email, this.employeeId)) {
-        errors.email = t('emailAlreadyExists');
-      }
-    }
-
-    this.errors = errors;
-    return Object.keys(errors).length === 0;
   }
 }
 
