@@ -16,7 +16,7 @@ export const employeeStore = {
   },
 
   add(employee) {
-    employees.push(employee);
+    employees.unshift(employee);
     this._persist();
   },
 
