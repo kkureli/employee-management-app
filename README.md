@@ -134,5 +134,9 @@ style: style file updated.
 | docs     | none    |
 | test     | none    |
 
+> This repository is submitted as part of the recruitment case study.  
+> All requirements have been implemented using LitElement (JavaScript).  
+> No external deployment was required.
+
 
 
