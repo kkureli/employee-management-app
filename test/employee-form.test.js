@@ -6,9 +6,7 @@ describe('employee-form', () => {
   let element;
 
   beforeEach(async () => {
-    // Persist'i bypass et localStorage'a yazmasın
     employeeStore._persist = () => {};
-    // employeeStore metodlarını hafifçe mockla test için
     employeeStore._data = [];
     employeeStore.delete = function (id) {
       this._data = this._data.filter((e) => e.id !== id);
@@ -74,7 +72,7 @@ describe('employee-form', () => {
       dob: '1990-01-01',
       employmentDate: '2020-01-01',
       phone: '0987654321',
-      email: 'jane@example.com', // Aynı email
+      email: 'jane@example.com',
       department: 'Analytics',
       position: 'Junior',
     };
@@ -131,7 +129,6 @@ describe('employee-form', () => {
       position: 'Senior',
     });
 
-    // Simulate /edit/10 URL
     window.history.pushState({}, '', '/edit/10');
 
     element = await fixture(html`<employee-form></employee-form>`);
@@ -140,7 +137,6 @@ describe('employee-form', () => {
     expect(element.mode).to.equal('edit');
     expect(element.formData.firstName).to.equal('Edit');
 
-    // URL'yi eski haline getir
     window.history.pushState({}, '', '/');
   });
 
@@ -203,7 +199,6 @@ describe('employee-form', () => {
     );
     await element.updateComplete;
 
-    // EmployeeStore'daki veri değişmemeli
     expect(employeeStore.getAll().find((e) => e.id === 30).firstName).to.equal(
       'Cancel'
     );

@@ -82,19 +82,16 @@ describe('employee-list', () => {
       '.view-toggle button'
     );
 
-    // Initially table mode
     expect(element.viewMode).to.equal('table');
     expect(tableBtn.disabled).to.be.true;
     expect(listBtn.disabled).to.be.false;
 
-    // Click list button
     listBtn.click();
     await element.updateComplete;
     expect(element.viewMode).to.equal('list');
     expect(tableBtn.disabled).to.be.false;
     expect(listBtn.disabled).to.be.true;
 
-    // Click table button
     tableBtn.click();
     await element.updateComplete;
     expect(element.viewMode).to.equal('table');
