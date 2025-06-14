@@ -15,18 +15,25 @@ export class NavigationMenu extends LitElement {
     return html`
       <nav>
         <div class="logo">
-          <img width="32" height="32" src="assets/ing.png" alt="ING Logo" />
+          <img width="32" height="32" src="/assets/ing.png" alt="ING Logo" />
           <span>ING</span>
         </div>
         <div class="nav-links">
-          <a href="./" title=${t('employeeList')}>${t('employeeList')}</a>
-          <a href="add" class="add-new" title=${t('addEmployee')}>
+          <a href="/" @click=${this._navigateToList} title=${t('employeeList')}>
+            ${t('employeeList')}
+          </a>
+          <a
+            href="/add"
+            class="add-new"
+            @click=${this._navigateToAdd}
+            title=${t('addEmployee')}
+          >
             ${t('addEmployee')} +
           </a>
           <img
             width="24"
             height="16"
-            src=${this.language === 'tr' ? 'assets/tr.png' : 'assets/uk.png'}
+            src=${this.language === 'tr' ? '/assets/tr.png' : '/assets/uk.png'}
             alt=${this.language === 'tr' ? 'Turkish Flag' : 'English Flag'}
             class="lang-flag"
             @click=${this._toggleLanguage}
@@ -35,6 +42,18 @@ export class NavigationMenu extends LitElement {
         </div>
       </nav>
     `;
+  }
+
+  _navigateToList(e) {
+    e.preventDefault();
+    window.history.pushState({}, '', '/');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  }
+
+  _navigateToAdd(e) {
+    e.preventDefault();
+    window.history.pushState({}, '', '/add');
+    window.dispatchEvent(new PopStateEvent('popstate'));
   }
 
   _toggleLanguage() {
