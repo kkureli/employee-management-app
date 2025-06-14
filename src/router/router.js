@@ -1,7 +1,11 @@
 import {Router} from '@vaadin/router';
 
 export const initRouter = () => {
-  const router = new Router(document.getElementById('outlet'));
+  const outlet = document.getElementById('outlet');
+  const baseUrl =
+    location.hostname === 'localhost' ? '/' : '/employee-management-app/';
+
+  const router = new Router(outlet, {baseUrl});
   router.setRoutes([
     {path: '/', component: 'employee-list'},
     {path: '/add', component: 'employee-form'},

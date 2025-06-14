@@ -7,7 +7,6 @@
   "module": "my-element.js",
   "type": "module",
   "scripts": {
-    "build": "echo \"This is not a TypeScript project, so no need to build.\"",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint '**/*.js'",
     "lint:lit-analyzer": "lit-analyzer my-element.js",
@@ -29,7 +28,9 @@
     "test:prod": "MODE=prod wtr",
     "test:prod:watch": "MODE=prod wtr --watch",
     "checksize": "rollup -c ; cat my-element.bundled.js | gzip -9 | wc -c ; rm my-element.bundled.js",
-    "start": "wds --watch"
+    "start": "wds --watch",
+    "build": "rollup -c && cp index.html dist/index.html && cp -r assets dist/assets && node fix-index.js",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [
     "web-components",
@@ -58,6 +59,7 @@
     "@web/test-runner-playwright": "^0.9.0",
     "@webcomponents/webcomponentsjs": "^2.8.0",
     "eslint": "^8.15.0",
+    "gh-pages": "^3.2.3",
     "lit-analyzer": "^1.2.1",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
